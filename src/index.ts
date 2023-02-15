@@ -20,6 +20,33 @@ const db = new DataBase(databaseUrl,'promo_generator')
 app.use(express.json())
 app.use(express.urlencoded({extended: true}));
 
+app.post('/create-token', async(req: Request, res: Response) => {
+    await db.saveEmail(req.body.email)
+    const token = jwt.sign({ email:req.body.email }, secretKey);
+    res.status(200).json(token)
+});
+
+app.post('/create-link',async(req:Request,res:Response)=>{
+    if(!req.headers.authorization) return res.status(401)
+    const user:any = jwt.verify(req.headers.authorization?.split(' ')[1],secretKey) as string
+    const uniqueEmail = await db.getEmail(user.email)
+    if(!uniqueEmail) return res.status(401)
+    const link = uuidv4()
+    const successLink = await db.createLink(req.body.userId,user.email,link)
+    if(!successLink) return res.status(400).json({error:'this user already has a unique referral link'})
+    res.status(200).json({link})
+})
+
+app.post('/get-link', async(req:Request,res:Response)=>{
+    if(!req.headers.authorization) return res.status(401)
+    const user:any = jwt.verify(req.headers.authorization?.split(' ')[1],secretKey) as string
+    const uniqueEmail = await db.getEmail(user?.email)
+    if(!uniqueEmail) return res.status(401)
+    const link = await db.getLink(req.body.userId)
+    if(link =="user not found") return res.status(400).json({error:"user not found in the database"})
+    res.status(200).json({link})
+})
+
 
 
 app.listen(port, () => {
