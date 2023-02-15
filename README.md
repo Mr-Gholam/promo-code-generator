@@ -37,7 +37,7 @@ databaseUrl = "Write your mongodb url here"
 
 You get your unique token in response. You need to set it in your header for the rest of the requests as you can see in example blew. 
 
-```http
+```
   Authorization : "Bearer your token"
 ```
 
