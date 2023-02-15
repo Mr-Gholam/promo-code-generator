@@ -28,7 +28,7 @@ databaseUrl = "Write your mongodb url here"
 ```
 ## Authorization
 
-```http
+```
   POST /create-token
 ```
 | Parameter | Type     | Description                |
@@ -47,7 +47,7 @@ You get your unique token in response. You need to set it in your header for the
 
 
 #### Create a referral link 
-```http
+```
   POST /create-link
 ```
 
@@ -58,7 +58,7 @@ You get your unique token in response. You need to set it in your header for the
 
 #### Get a referral link 
 
-```http
+```
   POST /get-link
 ```
 
@@ -70,7 +70,7 @@ You get your unique token in response. You need to set it in your header for the
 
 #### Get a promo code
 
-```http
+```
   POST /create-promo
 ```
 
@@ -82,7 +82,7 @@ You get your unique token in response. You need to set it in your header for the
 
 #### Check a promo code
 
-```http
+```
   POST /check-promo
 ```
 
