@@ -67,8 +67,14 @@ export default class DataBase {
             code = generateCode(codeLength)
             duplicateCode = await this.Promo?.findOne({code})
         }
-        await this.Promo?.insertOne({userId,code,used:false})
+        await this.Promo?.insertOne({userId,code,used:false,usedBy:undefined})
         return code
     }
-
+    public async checkPromo(usedBy:string,code:string):Promise<number>{
+        const promo:any = await this.Promo?.findOne({code})
+        if(!promo) return 0
+        if(promo.used) return 1
+        await this.Promo?.updateOne({code},{$set:{usedBy,used:true}})
+        return 2
+    }
 }

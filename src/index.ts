@@ -55,7 +55,16 @@ app.post('/create-promo',async(req:Request,res:Response)=>{
     const code = await db.createPromo(req.body.userId,5)
     res.status(200).json({promo:code})
 })
-// write number 4
+app.post('/check-promo',async(req:Request,res:Response)=>{
+    if(!req.headers.authorization) return res.status(401)
+    const user:any = jwt.verify(req.headers.authorization?.split(' ')[1],secretKey) as string
+    const uniqueEmail = await db.getEmail(user?.email)
+    if(!uniqueEmail) return res.status(401)
+    const codeStatus= await db.checkPromo(user.email,req.body.promo)
+    if(codeStatus == 0) return res.status(400).json({error:'invalid promo code'})
+    if(codeStatus == 1 ) return res.status(400).json({error:"this promo code is already used"})
+    if(codeStatus ==2) return res.status(200).json({success:`promo code is used by ${user.email}`})
+})
 
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
