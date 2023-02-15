@@ -47,7 +47,15 @@ app.post('/get-link', async(req:Request,res:Response)=>{
     res.status(200).json({link})
 })
 
-
+app.post('/create-promo',async(req:Request,res:Response)=>{
+    if(!req.headers.authorization) return res.status(401)
+    const user:any = jwt.verify(req.headers.authorization?.split(' ')[1],secretKey) as string
+    const uniqueEmail = await db.getEmail(user?.email)
+    if(!uniqueEmail) return res.status(401)
+    const code = await db.createPromo(req.body.userId,5)
+    res.status(200).json({promo:code})
+})
+// write number 4
 
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);

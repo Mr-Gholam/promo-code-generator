@@ -60,11 +60,11 @@ export default class DataBase {
         return user.link
     }
 
-    public async createPromo(userId:string):Promise<string>{
-        let code = generateCode(5)
+    public async createPromo(userId:string,codeLength:number):Promise<string>{
+        let code = generateCode(codeLength)
         let duplicateCode = await this.Promo?.findOne({code})
         while(duplicateCode){
-            code = generateCode(5)
+            code = generateCode(codeLength)
             duplicateCode = await this.Promo?.findOne({code})
         }
         await this.Promo?.insertOne({userId,code,used:false})
