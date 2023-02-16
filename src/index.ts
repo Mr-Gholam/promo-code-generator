@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid'
 
-import DataBase from './database.js'
+import DataBase from './database'
 
 dotenv.config();
 
@@ -23,7 +23,7 @@ app.use(express.urlencoded({extended: true}));
 app.post('/create-token', async(req: Request, res: Response) => {
     await db.saveEmail(req.body.email)
     const token = jwt.sign({ email:req.body.email }, secretKey);
-    res.status(200).json(token)
+    res.status(200).json({token})
 });
 
 app.post('/create-link',async(req:Request,res:Response)=>{
@@ -84,3 +84,5 @@ app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
   db.start();
 });
+
+export default app
