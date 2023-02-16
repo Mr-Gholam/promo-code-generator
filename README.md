@@ -70,7 +70,7 @@ You get your unique token in response. You need to set it in your header for the
 
 #### Get a promo code
 
-```http
+```
   POST /create-promo
 ```
 
