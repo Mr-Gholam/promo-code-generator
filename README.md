@@ -28,7 +28,7 @@ databaseUrl = "Write your mongodb url here"
 ```
 ## Authorization
 
-```http
+```
   POST /create-token
 ```
 | Parameter | Type     | Description                |
@@ -37,7 +37,7 @@ databaseUrl = "Write your mongodb url here"
 
 You get your unique token in response. You need to set it in your header for the rest of the requests as you can see in example blew. 
 
-```http
+```
   Authorization : "Bearer your token"
 ```
 
@@ -47,7 +47,7 @@ You get your unique token in response. You need to set it in your header for the
 
 
 #### Create a referral link 
-```http
+```
   POST /create-link
 ```
 
@@ -58,7 +58,7 @@ You get your unique token in response. You need to set it in your header for the
 
 #### Get a referral link 
 
-```http
+```
   POST /get-link
 ```
 
@@ -82,7 +82,7 @@ You get your unique token in response. You need to set it in your header for the
 
 #### Check a promo code
 
-```http
+```
   POST /check-promo
 ```
 
